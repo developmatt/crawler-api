@@ -44,9 +44,8 @@ class Router
 				$controller->$method();
 			}
 		}catch(Exception $e){
-			http_response_code($e->getMessage());
-			$notFound = new \App\Controller\NotFound;
-			$notFound->index(new ErrorMessages($e->getMessage()));
+			http_response_code(404);
+			echo "Endpoint not found";
 			die;
 		}
 	}
@@ -62,8 +61,8 @@ class Router
 			$method = $route['method'];
 			$controller->$method();
 		}else{
-			$notFound = new \App\Controller\NotFound;
-			$notFound->index();
+			http_response_code($e->getMessage());
+			echo "Endpoint not found";
 		}
 	}
 
