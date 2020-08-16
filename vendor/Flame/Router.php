@@ -15,14 +15,8 @@ class Router
 
 	protected $routes;
 
-	public function __construct(){
-		// $this->setRoutes();
-		// $this->run();
-	}
-
 	public function __call($name, $args){
 		$uri = $args[0];
-		
 		try{
 			if($_SERVER['REQUEST_URI'] == $args[0]){
 
@@ -44,25 +38,10 @@ class Router
 				$controller->$method();
 			}
 		}catch(Exception $e){
-			http_response_code(404);
-			echo "Endpoint not found";
-			die;
-		}
-	}
-
-	public function run(){
-		$route = array_filter($this->routes, function($r){
-			return $_SERVER['REQUEST_URI'] == $r['route'];
-		});
-		$route = array_shift($route);
-		if($route){
-			$class = "App\\Controller\\" . ucfirst($route['controller']);
-			$controller = new $class;
-			$method = $route['method'];
-			$controller->$method();
-		}else{
 			http_response_code($e->getMessage());
-			echo "Endpoint not found";
+			echo "Api error";
+			echo $e->getMessage();
+			die;
 		}
 	}
 
