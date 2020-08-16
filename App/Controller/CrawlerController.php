@@ -14,9 +14,25 @@ class CrawlerController extends Controller {
 	public $validProductTypes = ['carro', 'moto', 'caminhao'];
 	public $urlBase = 'https://seminovosbh.com.br/';
 
-	// https://seminovosbh.com.br/carro/citroen/ano-1999-2010/preco-8000-100000/km-4000-45000/"
+	public function getVehicle() {
+		try {
+			if(!$_POST['id']) throw new Exception('You must provide product id');
+			$query = $this->buildQueryBasedOnParams();
+			$vehicle = $this->getVehicleData($this->urlBase . $_POST['id']);
+		} catch(Exception $e) {
+			echo json_encode([
+				"status" => http_response_code(400),
+				"message" => $e->getMessage()
+			]);
+			die;
+		}
+		echo json_encode([
+			"status" => http_response_code(200),
+			"data" => $vehicle
+		]);
+	}
 
-	public function search(){
+	public function searchVehicle(){
 
 		$query = '';
 		$vehicleList = [];
@@ -39,7 +55,6 @@ class CrawlerController extends Controller {
 		]);
 		// echo json_encode($this->getVehicleDataList('carro/citroen'));
 		// echo json_encode($this->getVehicleData('https://seminovosbh.com.br/chevrolet-cobalt-2017-2018--2734255'));
-
 	}
 
 	public function isProductTypeValid() {
@@ -94,9 +109,6 @@ class CrawlerController extends Controller {
 	public function getVehicleDataList(String $url) {
 		$simpleHtmlDom = new SimpleHtmlDom();
 		$this->html = $simpleHtmlDom->file_get_html($url);
-
-		// var_dump($this->html);
-
 		$vehicleListExtractor = new VehicleListExtractor();
 		$vehicleList = $vehicleListExtractor->getVehicleFromHtmlContainer($this->html);
 
