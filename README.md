@@ -4,8 +4,8 @@ This documentation provides tips about how use this rest API
 **Base url:** `localhost:3000`
 
 ## Serving API
-To serve this API, use the command prompt, go to project public directory and run **PHP** serve command:
-`php -S localhost:3000`
+To serve this API, execute the `serve.php` file in terminal:
+`php serve.php`
 
 
 ## Consuming this API
