@@ -3,4 +3,4 @@
 require_once "../vendor/autoload.php";
 
 $route = new \Flame\Router;
-$route->post('/index', 'indexController@index');
+$route->get('/index', 'indexController@index');
