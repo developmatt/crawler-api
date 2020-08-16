@@ -14,34 +14,37 @@ class Router
 {
 
 	protected $routes;
+	public $found = false;
 
 	public function __call($name, $args){
 		$uri = $args[0];
 		try{
 			if($_SERVER['REQUEST_URI'] == $args[0]){
 
+				$this->found = true;
+
 				if(!$this->verifyMethodPermission($name)){
-					throw new Exception('405');
+					throw new Exception('Method not allowed', 405);
 				}
 				$arr = explode('@', $args[1]);
 				$class = $arr[0];
 				$method = $arr[1];
 				$class = "App\\Controller\\" . ucfirst($class);
 				if(!class_exists($class)){
-					throw new Exception('500');
+					throw new Exception('Route controller not found', 500);
 				}
 				$controller = new $class;
 
 				if(!in_array($method, get_class_methods($controller))){
-					throw new Exception('500');
+					throw new Exception('Route method not found', 500);
 				}
 				$controller->$method();
 			}
 		}catch(Exception $e){
-			http_response_code($e->getMessage());
-			echo "Api error";
-			echo $e->getMessage();
-			die;
+			echo json_encode([
+				'status' => $e->getCode(),
+				'message' => $e->getMessage()
+			]);
 		}
 	}
 
