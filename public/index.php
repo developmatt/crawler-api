@@ -8,7 +8,7 @@ $route->post('/vehicle', 'CrawlerController@getVehicle');
 
 if(!$route->found) {
     echo json_encode([
-        'status' => http_response_code(404),
+        'status' => 404,
         'message' => 'Resource not found'
     ]);
 }
