@@ -13,8 +13,8 @@ class IndexController extends Controller {
 
 	public function index(){
 		http_response_code(200);
-		// echo json_encode($this->getVehicleData('https://seminovosbh.com.br/chevrolet-cobalt-2017-2018--2734255'));
-		echo json_encode($this->getVehicleDataList('https://seminovosbh.com.br/carro/citroen'));
+		echo json_encode($this->getVehicleData('https://seminovosbh.com.br/chevrolet-cobalt-2017-2018--2734255'));
+		// echo json_encode($this->getVehicleDataList('https://seminovosbh.com.br/carro/citroen'));
 
 	}
 

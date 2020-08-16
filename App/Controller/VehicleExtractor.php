@@ -38,7 +38,7 @@ use App\Model\Vehicle;
 
 		public function getYear() {
 			preg_match_all('/(<span title=\"Ano\/modelo\" itemprop=\"modelDate\")(.*?)(<\/span>)/', $this->htmlContainer, $results);
-			return $results[0][0];
+			return strip_tags($results[0][0]);
 		}
 
 		public function getMileAge() {
