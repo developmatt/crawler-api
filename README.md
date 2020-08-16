@@ -109,4 +109,6 @@ Vehicle minimum mileage limit.
 Vehicle maximum mileage limit.
 
 - *page* {int}
-Result search page
+
+### About this api
+The small framework in wich this API was built is a try to build a looks like Laravel framework, basing some modules like router and views (this one, not used in this project). I built it using some ideas and tips found in internet. Considering that this framework (called Flamework) is very light I chose it instead Laravel.
