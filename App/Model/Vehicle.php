@@ -3,6 +3,7 @@
 namespace App\Model; 
 
 	class Vehicle {
+		public $id;
 		public $name;
 		public $description;
 		public $year;

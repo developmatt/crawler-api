@@ -13,6 +13,7 @@ use App\Model\Vehicle;
 
 			$this->htmlContainer = $pregResults[0][0];
 			$vehicle = new Vehicle();
+			$vehicle->id = $this->getId($pregResults[0][0]);
 			$vehicle->name = $this->getName($pregResults[0][0]);
 			$vehicle->description = $this->getDescription($pregResults[0][0]);
 			$vehicle->year = $this->getYear($pregResults[0][0]);
@@ -24,6 +25,11 @@ use App\Model\Vehicle;
 			$vehicle->pictures = $this->getPictures($pregResults[0][0]);
 
 			return $vehicle;
+		}
+
+		public function getId($resultContainer) {
+			preg_match_all('/(?<=<div class="mr-print-2">cod:<span>)(.*?)(?=<\/span>)/', $resultContainer, $results);
+			return $results[0][0];
 		}
 
 		public function getName() {

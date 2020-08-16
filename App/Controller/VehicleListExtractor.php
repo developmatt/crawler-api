@@ -18,6 +18,7 @@ use App\Model\Vehicle;
 
 			foreach ($this->htmlContainer as $key => $resultContainer) {
 				$currentVehicle = new Vehicle();
+				$currentVehicle->id = $this->getId($resultContainer);
 				$currentVehicle->name = $this->getName($resultContainer);
 				$currentVehicle->description = $this->getDescription($resultContainer);
 				$currentVehicle->year = $this->getYear($resultContainer);
@@ -31,6 +32,11 @@ use App\Model\Vehicle;
 			}
 
 			return $vehicleList;
+		}
+
+		public function getId($resultContainer) {
+			preg_match_all('/(?<= title="Adicionar aos Favoritos" class="btn-favoritar" data-id=")(.*?)(?=" data-name=")/', $resultContainer, $results);
+			return $results[0][0];
 		}
 
 		public function getPicture($resultContainer) {
