@@ -27,13 +27,16 @@ class CrawlerController extends Controller {
 			$vehicleList = $this->getVehicleDataList($this->urlBase . $query);
 			// var_dump($vehicleList);
 		} catch(Exception $e) {
-			http_response_code(400);
-			echo json_encode($e->getMessage());
+			echo json_encode([
+				"status" => http_response_code(400),
+				"message" => $e->getMessage()
+			]);
 			die;
 		}
-
-		echo http_response_code(200);
-		echo json_encode($vehicleList);
+		echo json_encode([
+			"status" => http_response_code(200),
+			"data" => $vehicleList
+		]);
 		// echo json_encode($this->getVehicleDataList('carro/citroen'));
 		// echo json_encode($this->getVehicleData('https://seminovosbh.com.br/chevrolet-cobalt-2017-2018--2734255'));
 
@@ -71,7 +74,7 @@ class CrawlerController extends Controller {
 		}
 
 		if(substr($query, -1) == '/') $query = substr($query, 0, -1);
-		
+
 		if($_POST['page']) $query .= '?page=' . $_POST['page'];
 
 
